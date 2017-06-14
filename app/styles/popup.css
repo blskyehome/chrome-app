@@ -1,0 +1,11 @@
+.wrap{
+    width: 360px;
+}
+body {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+.link-fieldset .col-form-label{
+    color: #c0c0c0;
+
+}
