@@ -1,0 +1,82 @@
+.clear{clear: both;height: 0;}
+.di-b{display: block;}
+.sidebar-nav .naviga{
+	color: inherit;
+}
+.am-tabs-bd .am-tab-panel {
+    padding: 10px 0;
+}
+.am-tabs-bd {
+    border: none;
+}
+.am-tab-panel .am-u-sm-12{
+    padding: 0;
+}
+.nav-link>li{
+	float: left;
+	margin: 10px;
+}
+.nav-link>li:hover {
+    transition: all 0.5s;
+}
+.nav-link img{
+	width: 110px; 
+	height: 60px;
+	margin-bottom: 0;
+}
+.nav-class{
+	font-size: 13px;
+}
+.nav-class .list {
+    padding: 7px 0 2px;
+}
+.nav-class .list>.cf{
+	margin-bottom: 2px;
+}
+.nav-class .list ul li {
+    position: relative;
+    float: left;
+    padding-bottom: 5px;
+}
+.nav-class .list ul li.col-1 {
+    text-align: center;
+    width: 5%
+    min-width: 75px;
+    margin-right: 10px;
+}
+.nav-class .list ul li.col-1 a {
+    font-weight: bold;
+}
+.nav-class .list ul li.col-2 {
+    width: 90%;
+}
+.nav-class .list ul li.col-2 ul {
+    width: 100%;
+    height: 20px;
+    position: relative;
+    margin: 0;
+}
+.nav-class .list ul li.col-2 ul li {
+    width: 110px;
+    padding: 0 5px;
+    overflow: hidden;
+    white-space: nowrap;
+    word-break: break-all;
+    text-overflow: ellipsis;
+}
+.nav-class .list ul li a {
+    line-height: 20px;
+    font-size: 14px;
+    color: #444;
+}
+.setnav-ul li{
+    float: left;
+    padding: 5px 15px;
+}
+.am-panel-hd .setLink{
+    position: absolute;
+    right: 10px;
+    top: 7px;
+    font-size: 14px;
+    cursor: pointer;
+}
