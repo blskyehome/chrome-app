@@ -9,7 +9,7 @@ import livereload from 'gulp-livereload';
 import args from './lib/args';
 
 gulp.task('styles:css', function() {
-  return gulp.src('app/styles/*.css')
+  return gulp.src('app/styles/*')
     .pipe(gulpif(args.sourcemaps, sourcemaps.init()))
     .pipe(gulpif(args.production, cleanCSS()))
     .pipe(gulpif(args.sourcemaps, sourcemaps.write()))
