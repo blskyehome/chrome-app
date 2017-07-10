@@ -5,7 +5,7 @@ const args = yargs
   .option('production', {
     boolean: true,
     default: false,
-    describe: 'Minify all scripts and assets'
+    describe: 'Minify all scripts and base'
   })
 
   .option('watch', {

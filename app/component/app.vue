@@ -4,63 +4,74 @@
             <img src="/images/icon-38.png" alt="Logo" class="img-rounded center-block">
         </div>-->
         <div class="col-md-4 pb-2" v-if="!isLogin">
-            <b-button class="btn-outline-success" href="/pages/login.html" target="_blank">
+            请先<b-button class="btn-link" href="/pages/login.html" target="_blank">
+            登录
+        </b-button>或者
+            <b-button class="btn-link" href="/pages/login.html" target="_blank">
                 注册
             </b-button>
-            <b-button class="btn-outline-success" href="/pages/login.html" target="_blank">
-                登录
-            </b-button>
+            后再操作
+
+
 
         </div>
 
-        <b-alert :show="dismissCountDown" dismissible v-bind:variant="variant" @dismiss-count-down="countDownChanged">
-            {{message}},{{dismissCountDown}} seconds...
-        </b-alert>
+       <div v-if="isLogin">
+           <b-alert :show="dismissCountDown" dismissible v-bind:variant="variant" @dismiss-count-down="countDownChanged">
+               {{message}},{{dismissCountDown}} seconds...
+           </b-alert>
 
-        <div v-if="modifyFlag" class="row">
-            <div class="col-12">
-                <b-form-fieldset
-                        label="标题"
-                :horizontal="true"
-                >
-                    <b-form-input v-model="title"
-                                  type="text"
-                                  size="sm"
-                                  placeholder="Enter your name"/>
-                </b-form-fieldset>
-            </div>
-            <div class="col-6">
-                <b-form-fieldset
-                        label="分类"
-                        :horizontal="true">
-                    <b-form-select v-model="category_id"
-                                   :options="options"
-                                   class="mb-3 "
-                                   size="sm"
-                    ></b-form-select>
+           <div v-if="modifyFlag" class="row">
+               <div class="col-12">
+                   <b-form-fieldset
+                           label="标题"
+                           :horizontal="true"
+                   >
+                       <b-form-input v-model="title"
+                                     type="text"
+                                     size="sm"
+                                     placeholder="Enter your name"/>
+                   </b-form-fieldset>
+               </div>
+               <div class="col-6">
+                   <b-form-fieldset
+                           label="分类"
+                           :horizontal="true">
+                       <b-form-select v-model="category_id"
+                                      :options="options"
+                                      class="mb-3 "
+                                      size="sm"
+                       ></b-form-select>
 
-                </b-form-fieldset>
-            </div>
-            <div class="col-6">
-                <b-form-fieldset
-                        label="类型"
-                        :horizontal="true">
-                    <b-form-radio v-model="openness" :options="optionsRadio">
-                    </b-form-radio>
-                </b-form-fieldset>
-            </div>
-            <div class=" col-4">
-                <b-button @click="modify" class="btn-outline-success  btn-sm btn-block">确定</b-button>
-            </div>
-            <div class="  col-4">
-                <b-button @click="deleteLink" class="btn-outline-danger btn-sm btn-block">删除</b-button>
-            </div>
-            <div class=" col-4">
-                <b-button class="btn-outline-info btn-sm btn-block" href="options.html" target="_blank">
-                    查看所有
-                </b-button>
-            </div>
-        </div>
+                   </b-form-fieldset>
+               </div>
+               <div class="col-6">
+                   <b-form-fieldset
+                           label="类型"
+                           :horizontal="true">
+                       <b-form-radio v-model="openness" :options="optionsRadio">
+                       </b-form-radio>
+                   </b-form-fieldset>
+               </div>
+               <div class=" col-3">
+                   <b-button @click="modify" class="btn-outline-success  btn-sm btn-block">确定</b-button>
+               </div>
+               <div class="  col-3">
+                   <b-button @click="deleteLink" class="btn-outline-danger btn-sm btn-block">删除</b-button>
+               </div>
+               <div class=" col-3">
+                   <b-button class="btn-outline-info btn-sm btn-block" href="options.html" target="_blank">
+                       查看所有
+                   </b-button>
+               </div>
+               <div class=" col-3">
+                   <b-button class="btn-outline-info btn-sm btn-block" href="category-new.html" target="_blank">
+                       新建分类
+                   </b-button>
+               </div>
+
+           </div>
+       </div>
     </div>
 </template>
 
@@ -125,6 +136,8 @@
                             _this.options.push(tmp)
                             _this.category_id = _this.categoryItems[i].id
                         }
+                        console.log(_this.category_id);
+                        _this.addLink(_this.category_id)
                     })
                     .catch(function (error) {
                         console.log(error);
@@ -183,48 +196,51 @@
                         console.log(error);
                     });
             },
-        },
-        created: function () {
-            this.getCategoryItems(this)
-        },
-        mounted: function () {
-            console.log(this.options)
-
-            let _this = this
-            this.isLogin = Common.isLogin()
-
-
-            chrome.tabs.getSelected(function (tabs) {
-                _this.title = tabs.title
-                _this.url = tabs.url
-                axios.post(Common.api + '/link',
+            addLink: function (category_id) {
+              let _this = this
+              this.isLogin = Common.isLogin()
+              console.log(category_id)
+              if (_this.isLogin){
+                chrome.tabs.getSelected(function (tabs) {
+                  _this.title = tabs.title
+                  _this.url = tabs.url
+                  console.log(tabs)
+                  axios.post(Common.api + '/link',
                     {
-                        token: Common.getToken(),
-                        url: tabs.url,
-                        title: tabs.title,
-                        openness: 1,
-                        category_id: 1,
-                        comment: 1
+                      token: Common.getToken(),
+                      url: tabs.url,
+                      title: tabs.title,
+                      openness: 1,
+                      category_id: category_id ,
+                      comment: '备注'
                     }
-                )
+                  )
                     .then(function (response) {
 //                        _this.loading = false
 //                        _this.error = response.data.msg
-                        _this.showAlert('success', '收藏成功')
-                        _this.forModify = response.data.msg
-                        console.log(_this.forModify);
+                      _this.showAlert('success', '收藏成功')
+                      _this.forModify = response.data.msg
+                      console.log(_this.forModify);
                     })
                     .catch(function (error) {
 //                        _this.loading = false
 //
 //                        _this.error = response.data.msg
-                        console.log(error);
+                      console.log(error);
 
-                        _this.showAlert('danger', error.response.data.msg)
+                      _this.showAlert('danger', error.response.data.msg)
                     });
-            });
+                });
+              }
+            }
+        },
+        created: function () {
+          this.isLogin = Common.isLogin()
 
-
+          this.getCategoryItems(this)
+        },
+        mounted: function () {
+            console.log(this.options)
         },
 
 

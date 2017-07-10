@@ -1,31 +1,18 @@
 <template lang="html">
-    <div class="container">
+    <div class="container wrapper">
        <div>
            <img src="/images/icon-128.png" alt="Logo" class="img-rounded center-block">
        </div>
-        <b-form-fieldset
-                :feedback="feedback"
-                description="您可以输入用户名或者邮箱"
-                label="User Name"
-                :state="state"
-                :label-size="1"
-        >
-
-            <b-form-input v-model="user_name"></b-form-input>
-
-        </b-form-fieldset>
-        <b-form-fieldset
-                label="Password"
-                :state="state"
-                :label-size="1"
-        >
-
-
-            <b-form-input v-model="password" type="password"></b-form-input>
-
-        </b-form-fieldset>
+        <div class="form-group">
+            <input class="form-control typeahead-only" type="text" v-model="user_name" placeholder="用户名/邮箱"/>
+            <span class="form-control-feedback  fui-user"></span>
+        </div>
+        <div class="form-group">
+            <input class="form-control typeahead-only" type="password"  v-model="password" placeholder="密码"/>
+            <span class="form-control-feedback  fui-lock"></span>
+        </div>
         <div v-if="error">{{error}}</div>
-        <b-btn @click="login" variant="info" class="m-1">Login</b-btn>
+        <button @click="login" type="button" class="btn btn-primary btn-block">登录</button>
     </div>
 </template>
 
@@ -47,7 +34,7 @@
                 return this.user_name.length ? '' : 'Please enter something';
             },
             state() {
-                return this.user_name.length ? 'success' : 'warning';
+                return this.user_name.length ? 'success' : 'primary';
             },
         },
         methods: {
@@ -59,6 +46,7 @@
                     .then(function (response) {
                         console.log(response.data.token);
                         localStorage.token = response.data.token;
+                        location.href='options.html'
 
                     })
                     .catch(function (error) {
