@@ -13,7 +13,49 @@
                                 :model="treeData">
                         </item>
                     </section>
-                    <button> 批量导入</button>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th><input type="checkbox" v-model="isCheckedAll" ></th>
+                                <th>标题</th>
+                                <th>链接</th>
+                                <th>选择分类</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr v-for="item in erweiBookMarkData">
+                                <td><input type="checkbox" v-model="item.isChecked"></td>
+                                <td class="td">{{item.title}}</td>
+                                <td class="td">{{item.url}}</td>
+                                <td>
+                                    <div class="form-group" v-if="categoryItem">
+                                        <label class="control-label">分类:</label>
+                                        <select class="form-control" v-model="item.category_id">
+                                            <!--    <option v-for="item in categoryItem" v-bind:value="item.id"
+                                                        v-if="item.id==linkForModify.category_id " selected="selected">{{item.name}}
+                                                </option>-->
+                                            <option v-for="item in categoryItem" v-bind:value="item.id">{{item.name}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </td>
+                                <td>sit</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="form-group" v-if="categoryItem">
+                        <label class="control-label">分类:</label>
+                        <select class="form-control" v-model="categoryId">
+                        <!--    <option v-for="item in categoryItem" v-bind:value="item.id"
+                                    v-if="item.id==linkForModify.category_id " selected="selected">{{item.name}}
+                            </option>-->
+                            <option v-for="item in categoryItem" v-bind:value="item.id">{{item.name}}
+                            </option>
+                        </select>
+                    </div>
+                    <button @click="batchImportLinks">批量导入</button>
                 </main>
             </div>
         </div>
@@ -60,11 +102,35 @@
           ]
         },//树状结构 书签
         erweiBookMarkData:[],//二维数组 书签
-        categoryId:null
+        categoryId:null,
+        categoryItem:null,
+        isCheckedAll:false
       }
     }
     ,
     methods: {
+      getCategoryItem () {
+        axios({
+          method: 'get',
+          url: config.serverURI + '/user/category',
+          params: {
+            token: localStorage.token
+          }
+        })
+          .then(response => {
+            console.log('GitHub Response:', response)
+            if (response.status !== 200) {
+              this.error = response.statusText
+              return
+            }
+            this.categoryItem = response.data.data
+          })
+          .catch(error => {
+            // Request failed.
+            console.log('error', error.response)
+            this.error = error.response.statusText
+          })
+      },
       getChromeBookmark(){
         let _this=this
         chrome.bookmarks.getTree(function (bookmarkArray) {
@@ -91,6 +157,7 @@
         }
       },
       batchImportLinks(){
+        console.log(this.erweiBookMarkData)
         axios({
           method: 'post',
           url: config.serverURI + '/links',
@@ -117,17 +184,27 @@
               duration: 5000
             })
           })
+      },
+      checkedAll(){
+//        this.isCheckedAll=!this.isCheckedAll
+        this.erweiBookMarkData.forEach(function(item) {
+          item.isChecked=!item.isChecked
+        });
+        console.log(this.erweiBookMarkData)
       }
     }
     ,
     created(){
       this.getChromeBookmark()
+      this.getCategoryItem()
     },
     mounted()
     {
     }
     ,
-    watch: {}
+    watch: {
+      'isCheckedAll':'checkedAll'
+    }
     ,
     components: {
       Hello, SidebarMenu, Navbar, Item
@@ -185,6 +262,12 @@
     }
 
     .card-title {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .td{
+        max-width: 200px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
