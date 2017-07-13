@@ -3,7 +3,7 @@
         <navbar></navbar>
         <div class="container-fluid">
             <div class="row">
-                <sidebar-menu></sidebar-menu>
+                <sidebar-menu :active="activePage"></sidebar-menu>
                 <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3" role="main">
                     <h1>Dashboard</h1>
 
@@ -72,6 +72,7 @@
   export default {
     data () {
       return {
+        activePage:'categoryPage',
         githubUrl: config.serverURI + '/user/link',
         error: null,
         color: null,
@@ -276,7 +277,7 @@
         padding-top: 1.5rem;
         padding-bottom: 1.5rem;
     }
-    .card-title{
+    .card-title,.card-text{
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;

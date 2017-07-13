@@ -3,7 +3,7 @@
         <navbar></navbar>
         <div class="container-fluid">
             <div class="row">
-                <sidebar-menu></sidebar-menu>
+                <sidebar-menu :active="activePage"></sidebar-menu>
                 <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3" role="main">
                     <h1>Dashboard</h1>
 
@@ -52,6 +52,7 @@
   export default {
     data () {
       return {
+        activePage:'categoryNewPage',
         githubUrl: config.serverURI + '/user/link',
         response: {},
         error: null,
