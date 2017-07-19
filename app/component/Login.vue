@@ -1,6 +1,6 @@
 <template lang="html">
     <div class="container wrapper">
-       <div>
+        <div class="logo-content">
            <img src="/images/icon-128.png" alt="Logo" class="img-rounded center-block">
        </div>
         <div class="form-group">
@@ -13,13 +13,15 @@
         </div>
         <div v-if="error">{{error}}</div>
         <button @click="login" type="button" class="btn btn-primary btn-block">登录</button>
+        <a href="register.html"  class="btn btn-link btn-block">注册</a>
     </div>
 </template>
 
 <script>
     import axios from 'axios';
+    import config from '../scripts/config'
+
     import common from '../scripts/common.js'
-    const api = 'http://api.blskye.dev/v1';
     export default {
         data(){
             return {
@@ -40,7 +42,7 @@
         methods: {
             login:function () {
                 let _this=this;
-                axios.post(api + '/token/user',
+                axios.post(config.serverURI + '/token/user',
                     {user_name: this.user_name, password: this.password}
                 )
                     .then(function (response) {

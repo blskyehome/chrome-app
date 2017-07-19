@@ -1,10 +1,10 @@
 {
   "appName": {
-    "message": "vue chrome extension example",
-    "description": "The name of the application"
+    "message": "Blskye",
+    "description": "Manage your links"
   },
   "appShortName": {
-    "message": "vue_chrome_extension",
+    "message": "Blskye",
     "description": "The short_name (maximum of 12 characters recommended) is a short version of the app's name."
   },
   "appDescription": {
@@ -12,8 +12,8 @@
     "description": "The description of the application"
   },
   "browserActionTitle": {
-    "message": "vue chrome extension example",
-    "description": "The title of the browser action button"
+    "message": "点击收藏当前页面链接",
+    "description": "Manage your links"
   }
 ,
   "login": {

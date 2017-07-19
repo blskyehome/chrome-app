@@ -26,11 +26,10 @@
                                     </b-input-group>
                                 </div>
                                 <div class="col-md-12">
-                                    <b-button-group>
-                                        <b-button v-if="categoryItem" v-for=" item in categoryItem "
-                                                  @click="getLinkByCategory(item.id)" variant="success">{{item.name}}
-                                        </b-button>
-                                    </b-button-group>
+                                    <button v-if="categoryItem" v-for=" (item,id) in categoryItem "
+                                            @click="getLinkByCategory(item.id)" class="btn"
+                                            v-bind:class="'bg-'+id +' font-white category-btn'">{{item.name}}
+                                    </button>
                                 </div>
                                 <br>
                                 <div class="col-3" v-for="(item,index) in response">
@@ -39,12 +38,12 @@
                                             <a v-bind:href="item.url" target="_blank">
                                                 <h5 class="card-title">{{item.title }}</h5>
                                             </a>
-                                            <h6 v-if="item.category" class="card-subtitle mb-2 text-muted">
+                                            <h6 v-if="item.category" class="card-subtitle mb-2 color-19">
                                                 {{item.category.name}} </h6>
-                                            <h6 v-else="item.category" class="card-subtitle mb-2 text-muted">未分类</h6>
+                                            <h6 v-else="item.category" class="card-subtitle mb-2 color-19">未分类</h6>
                                             <p class="card-text">{{item.comment }}</p>
-                                            <a href="#" class="card-link" @click="confirmDelete(item)">删除</a>
-                                            <a href="#" class="card-link" @click="forModify(item)">修改</a>
+                                            <a href="#" class="card-link pull-right" @click="confirmDelete(item)"><i class="fa fa-trash-o"></i> 删除</a>
+                                            <a href="#" class="card-link pull-right" @click="forModify(item)"><i class="fa fa-pencil"></i>修改</a>
                                         </div>
                                     </div>
                                 </div>
@@ -125,7 +124,7 @@
   export default {
     data () {
       return {
-        activePage:'linkPage',
+        activePage: 'linkPage',
         githubUrl: config.serverURI + '/user/link',
         response: {},
         error: null,
@@ -140,7 +139,7 @@
         deleteModalShow: false,
         modifyModalShow: false,
         categoryId: null,
-        loading:false
+        loading: false
       }
     },
 
@@ -154,7 +153,7 @@
         if (this.categoryId) {
           url = config.serverURI + '/user/category/' + this.categoryId + '/link'
         }
-        this.loading=true
+        this.loading = true
         axios({
           method: 'get',
           url: url,
@@ -166,43 +165,44 @@
           }
         })
           .then(response => {
-            console.log('GitHub Response:', response)
-            if (response.status !== 200) {
-              this.error = response.statusText
-              return
-            }
-            this.response = response.data.data
-            console.log('1',this.numFlag)
-            console.log('长度',response.data.data.length)
-            console.log('数据',response.data)
-            if (response.data.data.length >= 24) {
-              this.numFlag = true
-            } else {
-              this.numFlag = false
-            }
-            console.log('2',this.numFlag)
-            this.loading=false
-            if (response.data.data === 0) {
-              this.$toasted.success('已经加载完所有的链接', {
-                theme: 'bubble',
-                position: 'top-center',
-                duration: 2000
-              })
-            }
-            if (this.response.length === 0) {
-              this.$toasted.success('暂时没有内容', {
-                theme: 'bubble',
-                position: 'top-center',
-                duration: 2000
-              })
-            }
-            console.log('链接', this.response.length)
+          console.log('GitHub Response:', response)
+        if (response.status !== 200) {
+          this.error = response.statusText
+          return
+        }
+        this.response = response.data.data
+        console.log('1', this.numFlag)
+        console.log('长度', response.data.data.length)
+        console.log('数据', response.data)
+        if (response.data.data.length >= 24) {
+          this.numFlag = true
+        } else {
+          this.numFlag = false
+        }
+        console.log('2', this.numFlag)
+        this.loading = false
+        if (response.data.data === 0) {
+          this.$toasted.success('已经加载完所有的链接', {
+            theme: 'bubble',
+            position: 'top-center',
+            duration: 2000
           })
-          .catch(error => {
-            // Request failed.
-            console.log('error', error)
-            this.error = error
+        }
+        if (this.response.length === 0) {
+          this.$toasted.success('暂时没有内容', {
+            theme: 'bubble',
+            position: 'top-center',
+            duration: 2000
           })
+        }
+        console.log('链接', this.response.length)
+      })
+      .
+        catch(error => {
+          // Request failed.
+          console.log('error', error)
+        this.error = error
+      })
       },
       getCategoryItem () {
         axios({
@@ -229,7 +229,7 @@
       loadMore: function () {
         let url = config.serverURI + '/user/link'
         console.log(this.categoryId)
-        this.loading=true
+        this.loading = true
         if (this.categoryId) {
           url = config.serverURI + '/user/category/' + this.categoryId + '/link'
         }
@@ -244,27 +244,28 @@
           }
         })
           .then(response => {
-            console.log('GitHub Response:', response)
-            if (response.status !== 200) {
-              this.error = response.statusText
-              return
-            }
+          console.log('GitHub Response:', response)
+        if (response.status !== 200) {
+          this.error = response.statusText
+          return
+        }
 //          this.$set(this, 'response', response.data.data)
-            this.response = this.response.concat(response.data.data)
-            this.page = this.page + 1
-            console.log(this.response)
-            this.loading=false
-            if (response.data.data.length < 24) {
-              this.numFlag = false
-            }else {
-              this.numFlag = true
-            }
-          })
-          .catch(error => {
-            // Request failed.
-            console.log('error', error)
+        this.response = this.response.concat(response.data.data)
+        this.page = this.page + 1
+        console.log(this.response)
+        this.loading = false
+        if (response.data.data.length < 24) {
+          this.numFlag = false
+        } else {
+          this.numFlag = true
+        }
+      })
+        .
+        catch(error => {
+          // Request failed.
+          console.log('error', error)
 //          this.error = error.response.statusText
-          })
+      })
       },
       confirmDelete: function (item) {
         this.linkForDelete = item
@@ -380,45 +381,6 @@
 </script>
 
 <style lang="css">
-    .sidebar {
-        position: fixed;
-        top: 56px;
-        bottom: 0;
-        left: 0;
-        z-index: 1000;
-        padding: 20px;
-        overflow-x: hidden;
-        overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
-        border-right: 1px solid #eee;
-    }
-
-    /* Sidebar navigation */
-    .sidebar {
-        padding-left: 0;
-        padding-right: 0;
-    }
-
-    .sidebar .nav {
-        margin-bottom: 20px;
-    }
-
-    .sidebar .nav-item {
-        width: 100%;
-    }
-
-    .sidebar .nav-item + .nav-item {
-        margin-left: 0;
-    }
-
-    .sidebar .nav-link {
-        border-radius: 0;
-    }
-
-    /*
-     * Dashboard
-     */
-
-    /* Placeholders */
     .placeholders {
         padding-bottom: 3rem;
     }
@@ -432,5 +394,9 @@
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+    }
+
+    .category-btn {
+        margin: 10px;
     }
 </style>

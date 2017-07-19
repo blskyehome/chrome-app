@@ -1,5 +1,5 @@
 <template>
-    <b-navbar toggleable type="inverse" variant="info" fixed="top">
+    <b-navbar toggleable type="inverse" variant="1" fixed="top">
 
         <b-nav-toggle target="nav_collapse"></b-nav-toggle>
 
@@ -15,17 +15,18 @@
             </b-nav>
 
             <b-nav is-nav-bar class="ml-auto">
-                        <img class="avatar" v-bind:src="user.avatar_image.url" alt="">
+                <b-nav-item @click="signOut">退出登录</b-nav-item>
+                <!--<img class="avatar" v-bind:src="user.avatar_image.url" alt="">
                 <b-nav-item-dropdown right>
 
-                    <!-- Using text slot -->
+                    &lt;!&ndash; Using text slot &ndash;&gt;
                     <template slot="text">
                         <span style="font-weight: bold;">{{user.user_name}}</span>
                     </template>
 
-                    <b-dropdown-item to="#" @click="signOut">退出登录</b-dropdown-item>
+                    <b-dropdown-item to="#" @click="signOut"></b-dropdown-item>
                 </b-nav-item-dropdown>
-
+-->
             </b-nav>
         </b-collapse>
     </b-navbar>

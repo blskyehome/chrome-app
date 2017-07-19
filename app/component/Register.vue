@@ -1,11 +1,11 @@
 <template lang="html">
     <div class="container wrapper">
-       <div>
+       <div class="logo-content">
            <img src="/images/icon-128.png" alt="Logo" class="img-rounded center-block">
        </div>
         <div class="form-group">
             <input class="form-control typeahead-only" type="text" v-model="email" placeholder="邮箱"/>
-            <span class="form-control-feedback   fa-envelope"></span>
+            <span class="form-control-feedback   fui-mail"></span>
         </div>
         <div class="mgb20 input-group">
             <span class="input-group-addon" @click="getCaptcha">获取验证码</span>
