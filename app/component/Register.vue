@@ -22,6 +22,8 @@
 
         <div v-if="error">{{error}}</div>
         <button  type="button" class="btn btn-primary btn-block" @click="userRegister">注册</button>
+        <a href="login.html"  class="btn btn-link btn-block">登录</a>
+
     </div>
 </template>
 
@@ -100,7 +102,7 @@
               if (window.localStorage) {
                 window.localStorage.setItem('token', token)
               }
-              location.href='link.html'
+              location.href='import.html'
             })
           .catch(error => {
               // Request failed.

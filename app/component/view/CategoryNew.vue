@@ -5,7 +5,7 @@
             <div class="row">
                 <sidebar-menu :active="activePage"></sidebar-menu>
                 <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3" role="main">
-                    <h1>Dashboard</h1>
+                    <!--<h1>Dashboard</h1>-->
 
                     <section class=" placeholders">
                         <div v-if="error">
@@ -28,7 +28,7 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="col-sm-offset-2 col-sm-10">
-                                            <button type="button" @click="newCategory" class="btn btn-default">保存</button>
+                                            <button type="button" @click="newCategory" class="btn btn-info">保存</button>
                                         </div>
                                     </div>
                                 </form>
@@ -39,6 +39,7 @@
                 </main>
             </div>
         </div>
+        <page-footer></page-footer>
     </div>
 
 </template>
@@ -49,6 +50,8 @@
   import Navbar from '../Navbar.vue'
   import config from '../../scripts/config'
   import axios from 'axios'
+  import PageFooter from '../Footer.vue'
+
   export default {
     data () {
       return {
@@ -94,7 +97,7 @@
       }
     },
     components: {
-      Hello, SidebarMenu, Navbar
+      Hello, SidebarMenu, Navbar,PageFooter
     },
   }
 </script>

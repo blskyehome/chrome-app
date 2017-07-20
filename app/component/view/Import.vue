@@ -5,7 +5,7 @@
             <div class="row">
                 <sidebar-menu :active="activePage"></sidebar-menu>
                 <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3" role="main">
-                    <h1>Dashboard</h1>
+                    <!--<h1>Dashboard</h1>-->
 
                     <!--<section class=" placeholders">
                         <item
@@ -35,42 +35,44 @@
                                 <button type="button" @click="batchImportLinks" class="btn btn-info">批量导入</button>
                             </div>
                         </form>
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th><label>
+                                        <input type="checkbox" v-model="isCheckedAll">全选/反选
+                                    </label></th>
+                                    <th>标题</th>
+                                    <th>链接</th>
+                                    <!--<th>分类</th>-->
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr v-for="item in erweiBookMarkData">
+                                    <td><input type="checkbox" v-model="item.isChecked"></td>
+                                    <td class="td">{{item.title}}</td>
+                                    <td class="td"><a v-bind:href="item.url" target="_blank">{{item.url}}</a></td>
+                                    <!--<td>
+                                        <div class="form-group" v-if="categoryItem">
+                                            <select class="form-control" v-model="item.category_id">
+                                                &lt;!&ndash;    <option v-for="item in categoryItem" v-bind:value="item.id"
+                                                            v-if="item.id==linkForModify.category_id " selected="selected">{{item.name}}
+                                                    </option>&ndash;&gt;
+                                                <option v-for="item in categoryItem" v-bind:value="item.id">{{item.name}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </td>-->
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
                     </section>
-                    <div class="table-responsive">
-                        <table class="table table-striped">
-                            <thead>
-                            <tr>
-                                <th><label>
-                                    <input type="checkbox" v-model="isCheckedAll">全选/反选
-                                </label></th>
-                                <th>标题</th>
-                                <th>链接</th>
-                                <th>分类</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr v-for="item in erweiBookMarkData">
-                                <td><input type="checkbox" v-model="item.isChecked"></td>
-                                <td class="td">{{item.title}}</td>
-                                <td class="td"><a v-bind:href="item.url" target="_blank">{{item.url}}</a></td>
-                                <td>
-                                    <div class="form-group" v-if="categoryItem">
-                                        <select class="form-control" v-model="item.category_id">
-                                            <!--    <option v-for="item in categoryItem" v-bind:value="item.id"
-                                                        v-if="item.id==linkForModify.category_id " selected="selected">{{item.name}}
-                                                </option>-->
-                                            <option v-for="item in categoryItem" v-bind:value="item.id">{{item.name}}
-                                            </option>
-                                        </select>
-                                    </div>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
                 </main>
             </div>
         </div>
+        <page-footer></page-footer>
     </div>
 </template>
 
@@ -81,6 +83,7 @@
   import config from '../../scripts/config'
   import axios from 'axios'
   import Spinner from 'vue-simple-spinner'
+  import PageFooter from '../Footer.vue'
 
   //  import Item from '../Item.vue'
   export default {
@@ -211,7 +214,7 @@
     }
     ,
     components: {
-      Hello, SidebarMenu, Navbar,Spinner
+      Hello, SidebarMenu, Navbar,Spinner,PageFooter
       //Item
     }
   }

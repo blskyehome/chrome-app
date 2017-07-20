@@ -5,7 +5,7 @@
             <div class="row">
                 <sidebar-menu :active="activePage"></sidebar-menu>
                 <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3" role="main">
-                    <h1>Dashboard</h1>
+                    <!--<h1>Dashboard</h1>-->
                     <section class="placeholders">
                         <div class="row">
                             <div class="col-12">
@@ -28,35 +28,35 @@
                                 <button type="button" @click="batchImportLinks" class="btn btn-info">批量导入</button>
                             </div>
                         </form>
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th><label>
+                                        <input type="checkbox" v-model="isCheckedAll">全选/反选
+                                    </label></th>
+                                    <th>访问时间</th>
+                                    <th>链接</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr v-for="item in historyLink">
+                                    <td><input type="checkbox" v-model="item.isChecked"></td>
+                                    <td>{{ getTime(item.lastVisitTime) }}</td>
+                                    <td class="td">
+                                        <a v-bind:href="item.url">{{item.title?item.title:item.url}}</a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </section>
-                    <div class="table-responsive">
-                        <table class="table table-striped">
-                            <thead>
-                            <tr>
-                                <th><label>
-                                    <input type="checkbox" v-model="isCheckedAll">全选/反选
-                                </label></th>
-                                <th>访问时间</th>
-                                <th>链接</th>
-                                <!--<th>操作</th>-->
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr v-for="item in historyLink">
-                                <td><input type="checkbox" v-model="item.isChecked"></td>
-                                <td>{{ getTime(item.lastVisitTime) }}</td>
-                                <td class="td">
-                                    <a v-bind:href="item.url">{{item.title?item.title:item.url}}</a>
-                                </td>
-                                <!--<td><button class="btn btn-outline-success">添加</button></td>-->
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
+
 
                 </main>
             </div>
         </div>
+        <page-footer></page-footer>
     </div>
 
 </template>
@@ -68,6 +68,8 @@
   import config from '../../scripts/config'
   import axios from 'axios'
   import Spinner from 'vue-simple-spinner'
+  import PageFooter from '../Footer.vue'
+
 
   export default {
     data () {
@@ -190,7 +192,7 @@
       'isCheckedAll': 'checkedAll'
     },
     components: {
-      Hello, SidebarMenu, Navbar,Spinner
+      Hello, SidebarMenu, Navbar,Spinner,PageFooter
     }
   }
 </script>

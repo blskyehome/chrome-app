@@ -5,7 +5,7 @@
             <div class="row">
                 <sidebar-menu :active="activePage"></sidebar-menu>
                 <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3" role="main">
-                    <h1>Dashboard</h1>
+                    <!--<h1>Dashboard</h1>-->
 
                     <section class=" placeholders">
                         <div v-if="error">
@@ -59,6 +59,7 @@
                 </main>
             </div>
         </div>
+        <page-footer></page-footer>
     </div>
 
 </template>
@@ -66,6 +67,8 @@
 <script>
   import Hello from '../hello.vue'
   import SidebarMenu from '../SidebarMenu.vue'
+  import PageFooter from '../Footer.vue'
+
   import Navbar from '../Navbar.vue'
   import config from '../../scripts/config'
   import axios from 'axios'
@@ -221,7 +224,7 @@
       }
     },
     components: {
-      Hello, SidebarMenu, Navbar
+      Hello, SidebarMenu, Navbar,PageFooter
     },
     mounted () {
       this.getCategoryItem()

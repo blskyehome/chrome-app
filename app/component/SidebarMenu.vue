@@ -1,10 +1,11 @@
 <template>
     <nav class="col-sm-3 col-md-2 d-none d-sm-block  sidebar">
         <div class="profile">
-            <div class="avatar-content"><img v-bind:src="user.avatar_image.url" v-bind:alt="user.user_name"></div>
+            <div class="avatar-content"><img v-bind:src="user.avatar_image.url" v-bind:alt="user.user_name" onclick="location.href='user.html'"></div>
             <div class="user-name">
                 {{user.user_name}}
             </div>
+            <div class="user-email">{{user.email}}</div>
         </div>
         <ul class="nav nav-pills flex-column sidebar-ul">
             <li class="nav-item">
@@ -133,9 +134,9 @@
     .user-name{
         text-align: center;
         color: #F1C40F;
-        font-size: 17px;
+        font-size: 16px;
         font-weight: bold;
-        margin: 20px;
+        margin: 10px;
     }
      .active-page {
         color: #fff;
@@ -144,5 +145,11 @@
     }
     .sidebar-ul{
         margin: 0 30px;
+    }
+    .user-email{
+        text-align: center;
+        color: #99979c;
+        font-size: 13px;
+        margin: 8px;
     }
 </style>

@@ -48,7 +48,7 @@
                     .then(function (response) {
                         console.log(response.data.token);
                         localStorage.token = response.data.token;
-                        location.href='options.html'
+                        location.href='link.html'
 
                     })
                     .catch(function (error) {

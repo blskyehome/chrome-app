@@ -5,7 +5,7 @@
             <div class="row">
                 <sidebar-menu :active="activePage"></sidebar-menu>
                 <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3" role="main">
-                    <h1>Dashboard</h1>
+                    <!--<h1>链接</h1>-->
 
                     <section class=" placeholders">
                         <div v-if="error">
@@ -41,9 +41,9 @@
                                             <h6 v-if="item.category" class="card-subtitle mb-2 color-19">
                                                 {{item.category.name}} </h6>
                                             <h6 v-else="item.category" class="card-subtitle mb-2 color-19">未分类</h6>
-                                            <p class="card-text">{{item.comment }}</p>
-                                            <a href="#" class="card-link pull-right" @click="confirmDelete(item)"><i class="fa fa-trash-o"></i> 删除</a>
-                                            <a href="#" class="card-link pull-right" @click="forModify(item)"><i class="fa fa-pencil"></i>修改</a>
+                                            <!--<p class="card-text">{{item.comment }}</p>-->
+                                            <a href="#" class="card-link text-danger" @click="confirmDelete(item)"><i class="fa fa-trash-o"></i></a>
+                                            <a href="#" class="card-link text-info" @click="forModify(item)"><i class="fa fa-pencil"></i></a>
                                         </div>
                                     </div>
                                 </div>
@@ -108,7 +108,9 @@
                     </section>
                 </main>
             </div>
+
         </div>
+        <page-footer></page-footer>
     </div>
 
 </template>
@@ -116,6 +118,8 @@
 <script>
   import Hello from '../hello.vue'
   import SidebarMenu from '../SidebarMenu.vue'
+  import PageFooter from '../Footer.vue'
+
   import Navbar from '../Navbar.vue'
   import config from '../../scripts/config'
   import axios from 'axios'
@@ -375,7 +379,7 @@
       'categoryId': 'callGitHub'
     },
     components: {
-      Hello, SidebarMenu, Navbar, Spinner
+      Hello, SidebarMenu, Navbar, Spinner,PageFooter
     }
   }
 </script>

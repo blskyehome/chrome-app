@@ -1,3 +1,11 @@
-.card{
+.card {
     margin-bottom: 15px;
+}
+
+main {
+    margin: 50px;
+    display: block;
+}
+.placeholders{
+    min-height: 600px;
 }
