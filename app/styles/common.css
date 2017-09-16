@@ -9,3 +9,19 @@ main {
 .placeholders{
     min-height: 600px;
 }
+.icon{
+    width: 20px;
+    display: block;
+    float: left;
+    position: relative;
+    right: 2px;
+}
+.w120{
+    width: 120px;
+}
+.w200{
+    width: 200px;
+}
+.table-responsive th label{
+    margin-bottom: 0;
+}

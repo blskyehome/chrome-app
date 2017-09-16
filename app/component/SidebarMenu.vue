@@ -1,7 +1,7 @@
 <template>
     <nav class="col-sm-3 col-md-2 d-none d-sm-block  sidebar">
         <div class="profile">
-            <div class="avatar-content"><img v-bind:src="user.avatar_image.url" v-bind:alt="user.user_name" onclick="location.href='user.html'"></div>
+            <div class="avatar-content"><a href="user.html"><img v-bind:src="user.avatar_image.url" v-bind:alt="user.user_name"></a></div>
             <div class="user-name">
                 {{user.user_name}}
             </div>
@@ -34,6 +34,11 @@
                     <i class="fa fa-history"></i>
                     历史导入</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" v-bind:class="active=='userPage'?'active-page':''" href="user.html">
+                    <i class="fa fa-user"></i>
+                    个人信息</a>
+            </li>
         </ul>
     </nav>
 </template>
@@ -47,7 +52,7 @@
         isActive:'import',
         user: {
           avatar_image: {
-            url: '/images/icon-128.png'
+            url: '/images/avatar/blank.png'
           },
           email: 'user@blskye.com',
           user_name: 'User Name'
@@ -68,7 +73,7 @@
           this.user = response.data.user
           console.log(this.user.avatar_image)
           if (this.user.avatar_image === null) {
-            this.user.avatar_image = {url: config.baseURI + '/avatar/f72af3a670d5d56ead98684b409b941f.jpeg'}
+            this.user.avatar_image = {url: '/images/avatar/xiaohuangren.jpg'}
           }
         })
       .catch(error => {
@@ -87,8 +92,7 @@
         type: String,
         default:'options'
       }
-    },
-
+    }
   }
 </script>
 <style>
@@ -130,6 +134,7 @@
         margin: 0 auto;
         border: solid 2px #F1C40F;
         border-radius: 50%;
+       cursor: pointer;
     }
     .user-name{
         text-align: center;
@@ -145,6 +150,7 @@
     }
     .sidebar-ul{
         margin: 0 30px;
+        background: #ffffff;
     }
     .user-email{
         text-align: center;

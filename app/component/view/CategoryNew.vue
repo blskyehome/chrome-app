@@ -11,7 +11,7 @@
                         <div v-if="error">
                             Found an error
                         </div>
-                        <div v-else>
+                        <div class="mw640" v-else>
                             <div class="col-md-12">
                                 <form class="form-horizontal">
                                     <div class="form-group">
@@ -121,5 +121,9 @@
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+    }
+    .mw640{
+        max-width: 800px;
+        margin: 0 auto;
     }
 </style>

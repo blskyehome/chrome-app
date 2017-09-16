@@ -61,6 +61,7 @@
   },
   "dependencies": {
     "bootstrap-vue": "^0.16.1",
+    "vue-js-popover": "^1.1.2",
     "vue-simple-spinner": "^1.2.1",
     "vue-toasted": "^1.0.28"
   }

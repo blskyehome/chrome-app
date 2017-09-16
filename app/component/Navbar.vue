@@ -2,9 +2,8 @@
     <b-navbar toggleable type="inverse" variant="1" fixed="top">
 
         <b-nav-toggle target="nav_collapse"></b-nav-toggle>
-
+        <img class="logo" src="/images/lanlogo.svg" alt="">
         <b-link class="navbar-brand" to="#">
-            <span>Blskye</span>
         </b-link>
 
         <b-collapse is-nav id="nav_collapse">
@@ -15,7 +14,7 @@
             </b-nav>
 
             <b-nav is-nav-bar class="ml-auto">
-                <b-nav-item @click="signOut">退出登录</b-nav-item>
+                <b-nav-item @click="signOut"> <i class="fa fa-power-off"></i>&nbsp;退出登录</b-nav-item>
                 <!--<img class="avatar" v-bind:src="user.avatar_image.url" alt="">
                 <b-nav-item-dropdown right>
 
@@ -25,8 +24,7 @@
                     </template>
 
                     <b-dropdown-item to="#" @click="signOut"></b-dropdown-item>
-                </b-nav-item-dropdown>
--->
+                </b-nav-item-dropdown>-->
             </b-nav>
         </b-collapse>
     </b-navbar>
@@ -106,5 +104,8 @@
         width: 40px;
         height: 40px;
         border-radius: 50%;
+    }
+    .logo{
+        width: 40px;
     }
 </style>

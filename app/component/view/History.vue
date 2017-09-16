@@ -32,10 +32,10 @@
                             <table class="table table-striped">
                                 <thead>
                                 <tr>
-                                    <th><label>
+                                    <th  class="w120"><label>
                                         <input type="checkbox" v-model="isCheckedAll">全选/反选
                                     </label></th>
-                                    <th>访问时间</th>
+                                    <th class="w200">访问时间</th>
                                     <th>链接</th>
                                 </tr>
                                 </thead>
@@ -44,7 +44,9 @@
                                     <td><input type="checkbox" v-model="item.isChecked"></td>
                                     <td>{{ getTime(item.lastVisitTime) }}</td>
                                     <td class="td">
-                                        <a v-bind:href="item.url">{{item.title?item.title:item.url}}</a>
+                                        <a v-bind:href="item.url">
+                                            <img class="icon" v-bind:src="'chrome://favicon/size/16@2x/'+item.url"  alt="">
+                                            {{item.title?item.title:item.url}}</a>
                                     </td>
                                 </tr>
                                 </tbody>

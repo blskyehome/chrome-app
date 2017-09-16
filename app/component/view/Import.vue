@@ -39,7 +39,7 @@
                             <table class="table table-striped">
                                 <thead>
                                 <tr>
-                                    <th><label>
+                                    <th class="w120"><label>
                                         <input type="checkbox" v-model="isCheckedAll">全选/反选
                                     </label></th>
                                     <th>标题</th>
@@ -51,7 +51,8 @@
                                 <tr v-for="item in erweiBookMarkData">
                                     <td><input type="checkbox" v-model="item.isChecked"></td>
                                     <td class="td">{{item.title}}</td>
-                                    <td class="td"><a v-bind:href="item.url" target="_blank">{{item.url}}</a></td>
+                                    <td class="td"><a v-bind:href="item.url" target="_blank">
+                                        <img class="icon" v-bind:src="'chrome://favicon/size/16@2x/'+item.url" alt="">{{item.url}}</a></td>
                                     <!--<td>
                                         <div class="form-group" v-if="categoryItem">
                                             <select class="form-control" v-model="item.category_id">

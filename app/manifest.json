@@ -5,7 +5,7 @@
   "version": "0.0.0",
   "manifest_version": 2,
   "default_locale": "en",
-  	"options_page": "pages/.html",
+  	"options_page": "pages/link.html",
   "icons": {
     "16": "images/icon-16.png",
     "128": "images/icon-128.png"

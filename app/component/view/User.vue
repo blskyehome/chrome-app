@@ -12,38 +12,115 @@
                             Found an error
                         </div>
                         <div v-else>
-                            <div class="content">
-                                <div class="show-info">
-                                    <div class="test">
-                                        <vueCropper
-                                                ref="cropper2"
-                                                :img="example2.img"
-                                                :outputSize="example2.size"
-                                                :outputType="example2.outputType"
-                                                :info="example2.info"
-                                                :canScale="example2.canScale"
-                                                :autoCrop="example2.autoCrop"
-                                                :autoCropWidth="example2.width"
-                                                :autoCropHeight="example2.height"
-                                                :fixed="example2.fixed"
-                                                :fixedNumber="example2.fixedNumber"
-                                        ></vueCropper>
-                                    </div>
-                                    <label class="btn" for="upload2">选择图片</label>
-                                    <input type="file" id="upload2" style="position:absolute; clip:rect(0 0 0 0);" accept="image/png, image/jpeg, image/gif, image/jpg" @change="uploadImg($event, 2)">
-                                    <button @click="finish2('base64')" class="btn">上传</button>
-                                </div>
-                            </div>
-                        </div>
+                            <b-card no-block>
+                                <b-tabs small card ref="tabs" v-model="tabIndex">
+                                    <b-tab title="头像">
+                                        <div class="content">
+                                            <div class="show-info">
+                                                <div class="test">
+                                                    <vueCropper
+                                                            ref="cropper2"
+                                                            :img="example2.img"
+                                                            :outputSize="example2.size"
+                                                            :outputType="example2.outputType"
+                                                            :info="example2.info"
+                                                            :canScale="example2.canScale"
+                                                            :autoCrop="example2.autoCrop"
+                                                            :autoCropWidth="example2.width"
+                                                            :autoCropHeight="example2.height"
+                                                            :fixed="example2.fixed"
+                                                            :fixedNumber="example2.fixedNumber"
+                                                    ></vueCropper>
+                                                </div>
+                                                <div class="input-group pt-3">
+                                                    <label class="btn btn-info" for="upload2">选择图片</label>
+                                                    <input type="file" id="upload2"
+                                                           style="position:absolute; clip:rect(0 0 0 0);"
+                                                           accept="image/png, image/jpeg, image/gif, image/jpg"
+                                                           @change="uploadImg($event, 2)">
+                                                </div>
+                                                <div class="input-group">
+                                                    <button @click="finish2('base64')" class="btn btn-info">上传</button>
 
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </b-tab>
+                                    <b-tab title="个人信息">
+                                        <div class="row">
+
+                                            <div class="col-12">
+                                                <!-- Success/Error heads up input -->
+                                                <h4>昵称</h4>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">
+                                                      <i class="fa fa-fw fa-user-circle"></i>
+                                                    </span>
+                                                    <input class="form-control" v-model="user.user_name" type="text">
+                                                    <span class="input-group-addon">
+                                                         <button class=" btn btn-info" @click="updateUsername">确定</button>
+                                                    </span>
+                                                </div>
+                                                <br>
+                                                <h4>邮箱</h4>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">
+                                                      <i class="fa fa-fw fa-envelope"></i>
+                                                    </span>
+                                                    <input class="form-control" v-model="user.email"
+                                                           placeholder="请输入您要更换的邮箱" type="text">
+                                                    <span class="input-group-addon">
+                                                         <button class=" btn btn-default">验证</button>
+                                                    </span>
+                                                </div>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">
+                                                      <i class="fa fa-fw fa-bullhorn"></i>
+                                                    </span>
+                                                    <input class="form-control" placeholder="验证码" type="text">
+                                                    <span class="input-group-addon">
+                                                         <button class=" btn btn-info">确定</button>
+                                                    </span>
+                                                </div>
+                                                <br>
+
+                                                <h4>密码</h4>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">
+                                                      <i class="fa fa-fw fa-bullhorn"></i>
+                                                    </span>
+                                                    <input class="form-control" v-model="captcha" type="text"
+                                                           placeholder="输入验证码">
+                                                    <span class="input-group-addon">
+                                                        <button class=" btn btn-info" @click="getCaptcha">获取</button>
+                                                    </span>
+                                                </div>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">
+                                                      <i class="fa fa-fw fa-lock"></i>
+                                                    </span>
+                                                    <input class="form-control" type="password" v-model="password"
+                                                           placeholder="输入要设置的密码">
+                                                    <span class="input-group-addon">
+                                                        <button class=" btn btn-info" @click="updatePassword">确定</button>
+                                                    </span>
+                                                </div>
+                                                <br/>
+                                            </div>
+                                        </div>
+                                    </b-tab>
+                                    <!--<b-tab title="标签">
+                                        <v-select v-model="tagsSelected" :options="tags"></v-select>
+                                    </b-tab>-->
+                                </b-tabs>
+                            </b-card>
+                        </div>
                     </section>
                 </main>
             </div>
-
         </div>
         <page-footer></page-footer>
     </div>
-
 </template>
 
 <script>
@@ -56,12 +133,13 @@
   import axios from 'axios'
   import Spinner from 'vue-simple-spinner'
   import vueCropper from 'vue-cropper'
+  import vSelect from 'vue-select'
 
 
   export default {
     data () {
       return {
-        activePage: 'linkPage',
+        activePage: 'userPage',
         error: null,
         color: null,
         loading: false,
@@ -96,7 +174,7 @@
           outputType: 'png'
         },
         example2: {
-          img: '../images/mao.jpg',
+          img: '../images/avatar/xiaohuangren.jpg',
           info: true,
           size: 1,
           outputType: 'jpeg',
@@ -108,11 +186,129 @@
           fixed: true,
           fixedNumber: [4, 4]
         },
-        downImg: '#'
+        downImg: '#',
+        user: {
+          avatar_image: {
+            url: ''
+          },
+          email: 'user@blskye.com',
+          user_name: 'UserName'
+        },
+        captcha: null,
+        password: null,
+        tags:['foo','bar','baz'],
+        tagsSelected:null,
+        tabIndex: null,
+        tabs: null,
+        tabCounter: 0
       }
     },
 
     methods: {
+
+      getUserInfo () {
+        axios({
+          method: 'get',
+          url: config.serverURI + '/user',
+          params: {
+            token: localStorage.token
+          }
+        })
+          .then(response => {
+            console.log('Response:', response)
+            this.user = response.data.user
+            console.log(this.user.avatar_image)
+            if (this.user.avatar_image === null) {
+              this.user.avatar_image = {url: config.baseURI + '/avatar/f72af3a670d5d56ead98684b409b941f.jpeg'}
+            }
+          })
+          .catch(error => {
+            // Request failed.
+            console.log('error', error)
+            this.error = error.response.statusText
+          })
+      },
+      updateUsername () {
+        axios({
+          method: 'put',
+          url: config.serverURI + '/user/profile',
+          data: {
+            token: localStorage.token,
+            user_name: this.user.user_name
+          }
+        })
+          .then(response => {
+            console.log('Response:', response)
+            this.$toasted.success('用户名更新成功!', {
+              theme: 'bubble',
+              position: 'top-center',
+              duration: 5000
+            })
+          })
+          .catch(error => {
+            // Request failed.
+            console.log('error', error)
+            this.$toasted.error('修改失败!' + error.response.statusText, {
+              theme: 'bubble',
+              position: 'top-center',
+              duration: 5000
+            })
+          })
+      },
+      getCaptcha () {
+        axios({
+          method: 'post',
+          url: config.serverURI + '/user/captcha/base',
+          data: {
+            email: this.user.email
+          }
+        })
+          .then(response => {
+            console.log('Response:', response)
+            this.$toasted.success('邮件已发送至' + this.user.email, {
+              theme: 'bubble',
+              position: 'top-center',
+              duration: 5000
+            })
+          })
+          .catch(error => {
+            // Request failed.
+            console.log('error', error)
+            this.$toasted.error('邮件发送失败!' + error.response.statusText, {
+              theme: 'bubble',
+              position: 'top-center',
+              duration: 5000
+            })
+          })
+      },
+      updatePassword () {
+        axios({
+          method: 'put',
+          url: config.serverURI + '/user/password',
+          data: {
+            email: this.user.email,
+            captcha: this.captcha,
+            password: this.password
+          }
+        })
+          .then(response => {
+            console.log('Response:', response)
+            this.$toasted.success('密码更新成功!', {
+              theme: 'bubble',
+              position: 'top-center',
+              duration: 5000
+            })
+          })
+          .catch(error => {
+            // Request failed.
+            console.log('error', error)
+            this.$toasted.error('修改失败!' + error.response.statusText, {
+              theme: 'bubble',
+              position: 'top-center',
+              duration: 5000
+            })
+          })
+      },
       startCrop () {
         // start
         this.crap = true
@@ -215,15 +411,31 @@
           }
         }
         reader.readAsDataURL(file)
-      }
+      },
+      /*getTagsAll() {
+        axios({
+          method: 'get',
+          url: config.serverURI + '/tags'
+        })
+          .then(response=> {
+          console.log('Response:', response)
+          this.tags = response.data
+        })
+      .catch(error=> {
+          // Request failed.
+          console.log('error', error)
+          this.error = error.response.statusText
+        })
+      },*/
     },
-    mounted () {
 
+    mounted () {
+      this.getUserInfo()
+      this.getTagsAll()
     },
-    watch: {
-    },
+    watch: {},
     components: {
-      Hello, SidebarMenu, Navbar, Spinner,PageFooter,vueCropper
+      Hello, SidebarMenu, Navbar, Spinner, PageFooter, vueCropper ,vSelect
     }
   }
 </script>
@@ -250,38 +462,19 @@
 
     .content {
         margin: auto;
-        max-width: 1200px;
+        max-width: 640px;
         margin-bottom: 100px;
     }
+
     .test-button {
         display: flex;
         flex-wrap: wrap;
     }
-    .btn {
-        display: inline-block;
-        line-height: 1;
-        white-space: nowrap;
-        cursor: pointer;
-        background: #fff;
-        border: 1px solid #c0ccda;
-        color: #1f2d3d;
-        text-align: center;
-        box-sizing: border-box;
-        outline: none;
-        margin:20px 10px 0px 0px;
-        padding: 9px 15px;
-        font-size: 14px;
-        border-radius: 4px;
-        color: #fff;
-        background-color: #50bfff;
-        border-color: #50bfff;
-        transition: all .2s ease;
-        text-decoration: none;
-        user-select: none;
-    }
+
     .des {
         line-height: 30px;
     }
+
     code.language-html {
         padding: 10px 20px;
         margin: 10px 0px;
@@ -293,12 +486,15 @@
         border-radius: 5px;
         white-space: pre;
     }
+
     .show-info {
         margin-bottom: 50px;
     }
+
     .show-info h2 {
         line-height: 50px;
     }
+
     /*.title, .title:hover, .title-focus, .title:visited {
         color: black;
     }*/
@@ -308,22 +504,29 @@
         text-align: center;
         line-height: 1.5;
         margin: 20px 0px;
-        background-image: -webkit-linear-gradient(left,#3498db,#f47920 10%,#d71345 20%,#f7acbc 30%,#ffd400 40%,#3498db 50%,#f47920 60%,#d71345 70%,#f7acbc 80%,#ffd400 90%,#3498db);
+        background-image: -webkit-linear-gradient(left, #3498db, #f47920 10%, #d71345 20%, #f7acbc 30%, #ffd400 40%, #3498db 50%, #f47920 60%, #d71345 70%, #f7acbc 80%, #ffd400 90%, #3498db);
         color: transparent;
         -webkit-background-clip: text;
         background-size: 200% 100%;
         animation: slide 5s infinite linear;
         font-size: 40px;
     }
+
     .test {
         height: 500px;
     }
+
     @keyframes slide {
-        0%  {
+        0% {
             background-position: 0 0;
         }
         100% {
             background-position: -100% 0;
         }
+    }
+
+    .user-profile {
+        max-width: 650px;
+        margin: 0 auto;
     }
 </style>

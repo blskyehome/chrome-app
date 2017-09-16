@@ -60,7 +60,7 @@
                    <b-button @click="deleteLink" class="btn-outline-danger btn-sm btn-block">删除</b-button>
                </div>
                <div class=" col-3">
-                   <b-button class="btn-outline-info btn-sm btn-block" href="options.html" target="_blank">
+                   <b-button class="btn-outline-info btn-sm btn-block" href="link.html" target="_blank">
                        查看所有
                    </b-button>
                </div>

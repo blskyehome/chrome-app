@@ -15,15 +15,10 @@
 
                             <div v-if="response" class="row">
                                 <div class="col-12">
-                                    <b-input-group>
-                                        <b-form-input v-model="keyword"></b-form-input>
-
-                                        <!-- Attach Right button -->
-                                        <b-input-group-button slot="right">
-                                            <b-button class="btn-info">搜索</b-button>
-                                        </b-input-group-button>
-
-                                    </b-input-group>
+                                    <div class="form-group">
+                                        <input type="text" placeholder="输入关键词"  v-model="keyword" class="form-control typeahead-only">
+                                        <span class="form-control-feedback fa fa-search"></span>
+                                    </div>
                                 </div>
                                 <div class="col-md-12">
                                     <button v-if="categoryItem" v-for=" (item,id) in categoryItem "
@@ -35,15 +30,21 @@
                                 <div class="col-3" v-for="(item,index) in response">
                                     <div class="card">
                                         <div class="card-block">
-                                            <a v-bind:href="item.url" target="_blank">
+
+                                            <a v-bind:href="item.url" target="_blank" v-on:click="clickLink(item)">
+                                                <img class="icon" v-bind:src="'chrome://favicon/size/16@2x/'+item.url" alt="">
                                                 <h5 class="card-title">{{item.title }}</h5>
                                             </a>
                                             <h6 v-if="item.category" class="card-subtitle mb-2 color-19">
                                                 {{item.category.name}} </h6>
                                             <h6 v-else="item.category" class="card-subtitle mb-2 color-19">未分类</h6>
-                                            <!--<p class="card-text">{{item.comment }}</p>-->
-                                            <a href="#" class="card-link text-danger" @click="confirmDelete(item)"><i class="fa fa-trash-o"></i></a>
-                                            <a href="#" class="card-link text-info" @click="forModify(item)"><i class="fa fa-pencil"></i></a>
+                                            <div class="card-text ">
+                                                <span class="text-muted"><i class="fa fa-fire"></i>{{item.clicks}}</span>
+                                                <div class="button-handle">
+                                                    <a href="#" class="card-link text-danger handle" @click="confirmDelete(item)"><i class="fa fa-trash-o"></i></a>
+                                                    <a href="#" class="card-link text-info handle" @click="forModify(item)"><i class="fa fa-pencil"></i></a>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -151,7 +152,7 @@
       getLinkByCategory(category_id){
         this.categoryId = category_id
       },
-      callGitHub () {
+      getUserLinks () {
         let url = config.serverURI + '/user/link'
         console.log(this.categoryId)
         if (this.categoryId) {
@@ -368,15 +369,30 @@
             })
 //          this.error = error.response.statusText
           })
-      }
-    },
+      },
+      clickLink:function (link) {
+        axios({
+          method: 'put',
+          url: config.serverURI + '/link/'+link.id+'/clicks',
+        })
+
+          .then(function (response) {
+            link.clicks++
+            console.log(response.data);
+          })
+          .catch(function (error) {
+            console.log(error.response.data.msg);
+          });
+
+      },
+  },
     mounted () {
       this.getCategoryItem()
-      this.callGitHub()
+      this.getUserLinks()
     },
     watch: {
-      'keyword': 'callGitHub',
-      'categoryId': 'callGitHub'
+      'keyword': 'getUserLinks',
+      'categoryId': 'getUserLinks'
     },
     components: {
       Hello, SidebarMenu, Navbar, Spinner,PageFooter
@@ -394,7 +410,7 @@
         padding-bottom: 1.5rem;
     }
 
-    .card-title {
+    .card-title, .card-text {
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -402,5 +418,33 @@
 
     .category-btn {
         margin: 10px;
+    }
+    .handle{
+        display: none;
+    }
+    .card-block:hover>.card-text>.button-handle>.handle {
+       display: inline-block;
+    }
+    .button-handle{
+        position: absolute;
+        bottom: 1.2em;
+        left: auto;
+        right: .65em;
+        background: #ffffff;
+        padding-left: 15px;
+        padding-right: 10px;
+    }
+    .form-control-feedback {
+        position: absolute;
+        top: 0px;
+        right: 17px;
+        margin-top: 1px;
+        line-height: 36px;
+        font-size: 17px;
+        color: #b2bcc5;
+        background-color: transparent;
+        padding: 0 12px 0 0;
+        border-radius: 6px;
+        pointer-events: none;
     }
 </style>
